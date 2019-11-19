@@ -8,60 +8,47 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.content.Intent;
 
-import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-
-    private EditText itemET;
-    private Button btn;
-    private ListView itemsList;
-
-    private ArrayList<String> items;
-    private ArrayAdapter<String> adapter;
-
+    ListView listView;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        itemET = findViewById(R.id.item_edit_text);
-        btn = findViewById(R.id.add_btn);
-        itemsList = findViewById(R.id.items_list);
+        listView = (ListView) findViewById(R.id.listView);
+        intent = new Intent(this, itemselectedActivity.class);
 
-        items = FileHelper.readData(this);
+        String data[] = {"Horses", "Pineapples", "sombreros"};
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        itemsList.setAdapter(adapter);
-
-        btn.setOnClickListener(this);
-        itemsList.setOnItemClickListener(this);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(listClick);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.add_btn:
-                String itemEntered = itemET.getText().toString();
-                adapter.add(itemEntered);
-                itemET.setText("");
-                FileHelper.writeData(items, this);
-                Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
-                break;
+    private AdapterView.OnItemClickListener listClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            String itemInfo [] = new String[7];
+            //company name, listItemType, job type, location, status, last updated, notes
+            itemInfo[0] = "Example company name (Changed in code)";
+            itemInfo[1] = "Interview (Changed in code)";
+            itemInfo[2] = "Mid-level engineer (Changed in code)";
+            itemInfo[3] = "Bee hive, Australia (Changed in code)";
+            itemInfo[4] = "Denied (Changed in code)";
+            itemInfo[5] = "Last updated: 10/21/19 (changed in code)";
+            itemInfo[6] = "Notes: I hate this class now (Changed in code)";
+            //String itemValue = (String) listView.getItemAtPosition(position);
+
+            intent.putExtra("Item selected", itemInfo);
+
+            startActivity(intent);
         }
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        items.remove(position);
-        adapter.notifyDataSetChanged();
-        FileHelper.writeData(items, this);
-        Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
-
-    }
+    };
 }
