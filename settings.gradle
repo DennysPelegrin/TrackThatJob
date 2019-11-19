@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Track That Job'
+rootProject.name='Main'

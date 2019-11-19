@@ -1,4 +1,4 @@
-package com.example.trackthatjob;
+package com.example.main;
 
 import org.junit.Test;
 
