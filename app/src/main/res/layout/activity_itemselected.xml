@@ -82,4 +82,5 @@
         android:text="Status: Accepted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

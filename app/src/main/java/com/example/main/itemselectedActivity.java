@@ -1,10 +1,12 @@
-package com.example.trackthatjob;
+package com.example.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.content.Intent;
 import android.widget.TextView;
+import android.content.Intent;
+
+import java.util.ArrayList;
 
 public class itemselectedActivity extends AppCompatActivity {
 
@@ -15,7 +17,8 @@ public class itemselectedActivity extends AppCompatActivity {
 
         Intent nextIntent = getIntent();
 
-        String itemInfo[] = nextIntent.getStringArrayExtra("Item selected");
+        ArrayList<String> itemInfo = new ArrayList<String>();
+        itemInfo = nextIntent.getStringArrayListExtra("Item selected");
 
         TextView listItemText = (TextView) findViewById(R.id.listItemType);
         TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
@@ -25,12 +28,12 @@ public class itemselectedActivity extends AppCompatActivity {
         TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdatedText);
         TextView notesText = (TextView) findViewById(R.id.notesText);
 
-        companyNameText.setText(itemInfo[0]);
-        listItemText.setText(itemInfo[1]);
-        jobTypeText.setText(itemInfo[2]);
-        locationText.setText(itemInfo[3]);
-        statusText.setText(itemInfo[4]);
-        lastUpdatedText.setText(itemInfo[5]);
-        notesText.setText(itemInfo[6]);
+        companyNameText.setText(itemInfo.get(0));
+        listItemText.setText(itemInfo.get(1));
+        jobTypeText.setText(itemInfo.get(2));
+        locationText.setText(itemInfo.get(3));
+        statusText.setText(itemInfo.get(4));
+        lastUpdatedText.setText(itemInfo.get(5));
+        notesText.setText(itemInfo.get(6));
     }
 }
