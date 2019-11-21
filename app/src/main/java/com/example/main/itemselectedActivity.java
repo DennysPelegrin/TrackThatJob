@@ -25,7 +25,8 @@ public class itemselectedActivity extends AppCompatActivity {
         TextView jobTypeText = (TextView) findViewById(R.id.jobTypeText);
         TextView locationText = (TextView) findViewById(R.id.locationText);
         TextView statusText = (TextView) findViewById(R.id.statusText);
-        TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdatedText);
+        TextView tagsText = (TextView) findViewById(R.id.tagsText);
+        TextView datetimeText = (TextView) findViewById(R.id.datetimeText);
         TextView notesText = (TextView) findViewById(R.id.notesText);
 
         companyNameText.setText(itemInfo.get(0));
@@ -33,7 +34,19 @@ public class itemselectedActivity extends AppCompatActivity {
         jobTypeText.setText(itemInfo.get(2));
         locationText.setText(itemInfo.get(3));
         statusText.setText(itemInfo.get(4));
-        lastUpdatedText.setText(itemInfo.get(5));
-        notesText.setText(itemInfo.get(6));
+        tagsText.setText(itemInfo.get(5));
+        datetimeText.setText(itemInfo.get(6));
+        notesText.setText(itemInfo.get(7));
+
+        /*
+        newItemInfo.add(company);
+        newItemInfo.add(type);
+        newItemInfo.add(position);
+        newItemInfo.add(location);
+        newItemInfo.add(status);
+        newItemInfo.add(tags);
+        newItemInfo.add(datetime);
+        newItemInfo.add(notes);
+         */
     }
 }

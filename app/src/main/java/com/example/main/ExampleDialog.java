@@ -20,6 +20,8 @@ public class ExampleDialog extends AppCompatDialogFragment {
     private EditText editTextDateTime;
     private EditText editTextTags;
     private EditText editTextNotes;
+    private EditText editTextCompany;
+    private EditText editTextStatus;
     private ExampleDialogListener listener;
 
     @Override
@@ -45,8 +47,10 @@ public class ExampleDialog extends AppCompatDialogFragment {
                         String datetime = editTextDateTime.getText().toString();
                         String tags = editTextTags.getText().toString();
                         String notes = editTextNotes.getText().toString();
+                        String status = editTextStatus.getText().toString();
+                        String company = editTextCompany.getText().toString();
 
-                        listener.applyTexts(type, position, location, datetime, tags, notes);
+                        listener.applyTexts(type, position, location, datetime, tags, notes, status, company);
                     }
                 });
 
@@ -56,6 +60,8 @@ public class ExampleDialog extends AppCompatDialogFragment {
         editTextDateTime = view.findViewById(R.id.edit_date_time);
         editTextTags = view.findViewById(R.id.edit_tags);
         editTextNotes = view.findViewById(R.id.edit_notes);
+        editTextStatus = view.findViewById(R.id.edit_status);
+        editTextCompany = view.findViewById(R.id.edit_company);
 
         return builder.create();
     }
@@ -72,6 +78,6 @@ public class ExampleDialog extends AppCompatDialogFragment {
     }
 
     public interface ExampleDialogListener{
-        void applyTexts(String type, String position, String location, String datetime, String tags, String notes);
+        void applyTexts(String type, String position, String location, String datetime, String tags, String notes, String status, String company);
     }
 }

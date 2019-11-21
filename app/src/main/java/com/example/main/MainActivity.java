@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
     */
     private Button button;
     Context context;
+
     ListView listView;
     Intent intent;
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
     }
 
     @Override
-    public void applyTexts(String type, String position, String location, String datetime, String tags, String notes) {
+    public void applyTexts(String type, String position, String location, String datetime, String tags, String notes, String status, String company) {
         /*
         textViewType.setText(type);
         textViewPosition.setText(position);
@@ -135,6 +137,13 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
         newItemInfo.add(type);
         newItemInfo.add(position);
         newItemInfo.add(location);
+        ArrayList<String> newItemInfo = new ArrayList<String>();
+
+        newItemInfo.add(company);
+        newItemInfo.add(type);
+        newItemInfo.add(position);
+        newItemInfo.add(location);
+        newItemInfo.add(status);
         newItemInfo.add(tags);
         newItemInfo.add(datetime);
         newItemInfo.add(notes);
