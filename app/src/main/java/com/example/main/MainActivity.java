@@ -68,13 +68,15 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
 
         for(int i = 0; i < data.size(); i++) {
             String newItemTitle = "";
-            newItemTitle += data.get(i).get(2);
-            newItemTitle += "\nCompanyName\n";
-            newItemTitle += data.get(i).get(3);
+            newItemTitle += data.get(i).get(1); //Position
             newItemTitle += "\n";
-            newItemTitle += data.get(i).get(5);
+            newItemTitle += data.get(i).get(2); //Company
             newItemTitle += "\n";
-            newItemTitle += data.get(i).get(4);
+            newItemTitle += data.get(i).get(3); //Location
+            newItemTitle += "\n";
+            newItemTitle += data.get(i).get(5); //Date time
+            newItemTitle += "\n";
+            newItemTitle += data.get(i).get(6); //Tags
             itemTitles.add(newItemTitle);
         }
 
@@ -130,25 +132,19 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
         textViewNotes.setText(notes);
          */
 
-        //company name, listItemType, job position, location, status, last updated, notes
         ArrayList<String> newItemInfo = new ArrayList<String>();
 
-        newItemInfo.add("Company name here");
+        //Type, position, company, location, time/date, status, tags, notes
         newItemInfo.add(type);
         newItemInfo.add(position);
-        newItemInfo.add(location);
-        ArrayList<String> newItemInfo = new ArrayList<String>();
-
         newItemInfo.add(company);
-        newItemInfo.add(type);
-        newItemInfo.add(position);
         newItemInfo.add(location);
+        newItemInfo.add(datetime);
         newItemInfo.add(status);
         newItemInfo.add(tags);
-        newItemInfo.add(datetime);
         newItemInfo.add(notes);
 
-        String newItemTitle = position + "\nCompany name\n" + location + "\n" + datetime + "\n" + tags;
+        String newItemTitle = position + "\n" + company + "\n" + location + "\n" + datetime + "\n" + tags;
         itemTitles.add(newItemTitle);
         adapter.notifyDataSetChanged();
 

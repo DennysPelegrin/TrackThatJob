@@ -29,13 +29,13 @@ public class itemselectedActivity extends AppCompatActivity {
         TextView datetimeText = (TextView) findViewById(R.id.datetimeText);
         TextView notesText = (TextView) findViewById(R.id.notesText);
 
-        companyNameText.setText(itemInfo.get(0));
-        listItemText.setText(itemInfo.get(1));
-        jobTypeText.setText(itemInfo.get(2));
+        listItemText.setText(itemInfo.get(0));
+        jobTypeText.setText(itemInfo.get(1));
+        companyNameText.setText(itemInfo.get(2));
         locationText.setText(itemInfo.get(3));
-        statusText.setText(itemInfo.get(4));
-        tagsText.setText(itemInfo.get(5));
-        datetimeText.setText(itemInfo.get(6));
+        datetimeText.setText(itemInfo.get(4));
+        statusText.setText(itemInfo.get(5));
+        tagsText.setText(itemInfo.get(6));
         notesText.setText(itemInfo.get(7));
 
         /*

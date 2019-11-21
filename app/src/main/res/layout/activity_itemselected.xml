@@ -56,10 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="21dp"
         android:text="Last Updated: 10/21/19"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusText" />
+        app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
     <TextView
         android:id="@+id/notesText"
@@ -81,7 +81,7 @@
         android:layout_marginTop="20dp"
         android:text="Status: Accepted"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationText" />
+        app:layout_constraintTop_toBottomOf="@+id/datetimeText" />
 
     <TextView
         android:id="@+id/tagsText"
@@ -92,5 +92,5 @@
         android:layout_marginTop="20dp"
         android:text="enter, tags, here, comma, spaced"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datetimeText" />
+        app:layout_constraintTop_toBottomOf="@+id/statusText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
