@@ -1,5 +1,6 @@
 package com.example.main;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +20,10 @@ import android.widget.ListView;
 import android.content.Intent;
 import android.widget.AdapterView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
     private TextView textViewNotes;
     */
     private Button button;
+    Context context;
     ListView listView;
     Intent intent;
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         /*
         textViewType = (TextView) findViewById(R.id.textview_type);
@@ -54,6 +61,20 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
 
         listView = (ListView) findViewById(R.id.listView);
         intent = new Intent(this, itemselectedActivity.class);
+
+        data = FileHelper.readData(context);
+
+        for(int i = 0; i < data.size(); i++) {
+            String newItemTitle = "";
+            newItemTitle += data.get(i).get(2);
+            newItemTitle += "\nCompanyName\n";
+            newItemTitle += data.get(i).get(3);
+            newItemTitle += "\n";
+            newItemTitle += data.get(i).get(5);
+            newItemTitle += "\n";
+            newItemTitle += data.get(i).get(4);
+            itemTitles.add(newItemTitle);
+        }
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemTitles);
         listView.setAdapter(adapter);
@@ -83,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
             //itemInfo[6] = "Notes: I hate this class now (Changed in code)";
             //String itemValue = (String) listView.getItemAtPosition(position);
 
-            Log.i("INFO: ", data.get(position).get(0));
+            FileHelper.writeData(data, context);
+
             intent.putExtra("Item selected", data.get(position));
 
             startActivity(intent);
