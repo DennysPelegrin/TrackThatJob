@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class FileHelper {
 
-    public static final String FILENAME = "listinfo.dat";
+    public static final String FILENAME = "list.dat";
 
     public static void writeData(ArrayList<ArrayList<String>> items, Context context){
 

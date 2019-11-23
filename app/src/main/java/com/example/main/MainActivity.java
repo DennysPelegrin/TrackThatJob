@@ -61,10 +61,27 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
         textViewNotes = (TextView) findViewById(R.id.textview_notes);
          */
 
+        Intent prevIntent = getIntent();
+
         listView = (ListView) findViewById(R.id.listView);
         intent = new Intent(this, itemselectedActivity.class);
 
         data = FileHelper.readData(context);
+
+        if(prevIntent != null) {
+            int delPos = prevIntent.getIntExtra("DeletePosition", -1);
+            int savePos = prevIntent.getIntExtra("SavePosition", -1);
+
+            if(delPos != -1) {
+                data.remove(delPos);
+            }
+            else if(savePos != -1) {
+                String newStatusText = prevIntent.getStringExtra("StatusText");
+                String newNotesText = prevIntent.getStringExtra("NotesText");
+                data.get(savePos).set(5, newStatusText);
+                data.get(savePos).set(7, newNotesText);
+            }
+        }
 
         for(int i = 0; i < data.size(); i++) {
             String newItemTitle = "";
@@ -83,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemTitles);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(listClick);
+        FileHelper.writeData(data, context);
 
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -97,20 +115,10 @@ public class MainActivity extends AppCompatActivity implements ExampleDialog.Exa
     private AdapterView.OnItemClickListener listClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            //String itemInfo [] = new String[7];
-            //company name, listItemType, job type, location, status, last updated, notes
-            //itemInfo[0] = "Example company name (Changed in code)";
-            //itemInfo[1] = "Interview (Changed in code)";
-            //itemInfo[2] = "Mid-level engineer (Changed in code)";
-            //itemInfo[3] = "Bee hive, Australia (Changed in code)";
-            //itemInfo[4] = "Denied (Changed in code)";
-            //itemInfo[5] = "Last updated: 10/21/19 (changed in code)";
-            //itemInfo[6] = "Notes: I hate this class now (Changed in code)";
-            //String itemValue = (String) listView.getItemAtPosition(position);
-
             FileHelper.writeData(data, context);
 
             intent.putExtra("Item selected", data.get(position));
+            intent.putExtra("Position", position);
 
             startActivity(intent);
         }
