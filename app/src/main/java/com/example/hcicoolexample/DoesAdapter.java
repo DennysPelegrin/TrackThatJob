@@ -40,7 +40,7 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
         final String getStatus = myDoes.get(i).getStatus();
         final String getTags = myDoes.get(i).getTags();
         final String getNotes = myDoes.get(i).getNotes();
-        final String getKeyDoes = myDoes.get(i).getKeydoes();
+        final int pos = i;
 
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,7 +54,7 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
                 aa.putExtra("status", getStatus);
                 aa.putExtra("tags", getTags);
                 aa.putExtra("notes", getNotes);
-                aa.putExtra("keydoes", getKeyDoes);
+                aa.putExtra("Position", pos);
                 context.startActivity(aa);
             }
         });
@@ -69,7 +69,6 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
         TextView titledoes;
         TextView descdoes;
         TextView datedoes;
-        TextView keydoes;
 
         public MyViewHolder(@NonNull View itemView){
             super(itemView);

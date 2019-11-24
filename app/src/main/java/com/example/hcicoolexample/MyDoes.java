@@ -1,5 +1,7 @@
 package com.example.hcicoolexample;
 
+import java.util.ArrayList;
+
 public class MyDoes {
     String itemType;
     String position;
@@ -9,13 +11,12 @@ public class MyDoes {
     String status;
     String tags;
     String notes;
-    String keydoes;
 
     public MyDoes(){
 
     }
 
-    public MyDoes(String itemType, String position, String company, String location, String date, String status, String tags, String notes, String keydoes){
+    public MyDoes(String itemType, String position, String company, String location, String date, String status, String tags, String notes){
         this.itemType = itemType;
         this.position = position;
         this.company = company;
@@ -24,7 +25,6 @@ public class MyDoes {
         this.status = status;
         this.tags = tags;
         this.notes = notes;
-        this.keydoes = keydoes;
     }
 
     public void setItemType(String itemType) {
@@ -46,8 +46,6 @@ public class MyDoes {
     public void setTags(String tags) { this.tags = tags; }
 
     public void setNotes(String notes) { this.notes = notes; }
-
-    public void setKeydoes(String keydoes) { this.keydoes = keydoes; }
 
     public String getItemType() {
         return itemType;
@@ -79,5 +77,16 @@ public class MyDoes {
         return notes;
     }
 
-    public String getKeydoes() { return keydoes; }
+    public ArrayList<String> getInfo() {
+        ArrayList<String> info = new ArrayList<String>();
+        info.add(itemType);
+        info.add(position);
+        info.add(company);
+        info.add(location);
+        info.add(date);
+        info.add(status);
+        info.add(tags);
+        info.add(notes);
+        return info;
+    }
 }

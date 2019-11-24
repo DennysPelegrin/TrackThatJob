@@ -24,9 +24,6 @@ public class NewTaskAct extends AppCompatActivity {
     TextView titlepage, itemTypeTitle, positionTitle, companyTitle, locationTitle, dateTitle, statusTitle, tagsTitle, notesTitle;
     EditText itemType, position, company, location, date, status, tags, notes;
     Button btnSaveTask, btnCancel;
-    DatabaseReference reference;
-    Integer doesNum = new Random().nextInt(); //use this as id of does
-    String keydoes = Integer.toString(doesNum);
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -60,33 +57,22 @@ public class NewTaskAct extends AppCompatActivity {
 
         btnSaveTask.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 //inset data to database
-                //creates new directory called BoxDoes based on teh main acitivty
-                reference = FirebaseDatabase.getInstance().getReference().child("HCICoolExample").child("Does" + doesNum);
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        dataSnapshot.getRef().child("itemType").setValue(itemType.getText().toString());
-                        dataSnapshot.getRef().child("position").setValue(position.getText().toString());
-                        dataSnapshot.getRef().child("company").setValue(company.getText().toString());
-                        dataSnapshot.getRef().child("location").setValue(location.getText().toString());
-                        dataSnapshot.getRef().child("date").setValue(date.getText().toString());
-                        dataSnapshot.getRef().child("status").setValue(status.getText().toString());
-                        dataSnapshot.getRef().child("tags").setValue(tags.getText().toString());
-                        dataSnapshot.getRef().child("notes").setValue(notes.getText().toString());
-                        dataSnapshot.getRef().child("keydoes").setValue(keydoes);
+                String itemT = itemType.getText().toString();
+                String p = position.getText().toString();
+                String c = company.getText().toString();
+                String l = location.getText().toString();
+                String d = date.getText().toString();
+                String s = status.getText().toString();
+                String t = tags.getText().toString();
+                String n = notes.getText().toString();
+                String[] newData = {itemT, p, c, l, d, s, t, n};
 
-                        //going back into the main activity?
-                        Intent a = new Intent(NewTaskAct.this, MainActivity.class);
-                        startActivity(a);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                //going back into the main activity?
+                Intent a = new Intent(NewTaskAct.this, MainActivity.class);
+                a.putExtra("NewData", newData);
+                startActivity(a);
             }
         });
 

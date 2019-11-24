@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -25,8 +26,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
     TextView titlepage, subtitlepage, endpage;
-    DatabaseReference reference;
     RecyclerView ourdoes;
+    Intent intent;
     ArrayList<MyDoes> list;
     DoesAdapter doesAdapter;
     Button btnAddNew;
@@ -63,26 +64,45 @@ public class MainActivity extends AppCompatActivity{
         ourdoes.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<MyDoes>();
 
+        intent = new Intent(this, EditTaskDesk.class);
+
         //get data from Firebase
-        reference = FirebaseDatabase.getInstance().getReference().child("HCICoolExample");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
-                //set code to retrieve data and replace layout
-                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    MyDoes p = dataSnapshot1.getValue(MyDoes.class);
-                    list.add(p);
-                }
-                doesAdapter = new DoesAdapter(MainActivity.this, list);
-                ourdoes.setAdapter(doesAdapter);
-                doesAdapter.notifyDataSetChanged();
+        ArrayList<ArrayList<String>> data = FileHelper.readData(this);
+        for(int i = 0; i < data.size(); i++) {
+            MyDoes newMyDoes = new MyDoes(data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5), data.get(i).get(6), data.get(i).get(7));
+            list.add(newMyDoes);
+        }
+
+        Intent prevIntent = getIntent();
+        if(prevIntent != null) {
+            String newData[] = prevIntent.getStringArrayExtra("NewData");
+            if(newData != null) {
+                MyDoes newMyDoes = new MyDoes(newData[0], newData[1], newData[2], newData[3], newData[4], newData[5], newData[6], newData[7]);
+                data.add(newMyDoes.getInfo());
+                list.add(newMyDoes);
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError){
-                //set code to show an error
-                Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
+            int pos = prevIntent.getIntExtra("DeletePosition", -5);
+            if(pos != -5) {
+                data.remove(pos);
+                list.remove(pos);
             }
-        });
+
+            int changePos = prevIntent.getIntExtra("ChangePosition", -3);
+            if(changePos != -3) {
+                String[] newInfo = prevIntent.getStringArrayExtra("NewInfo");
+                MyDoes newMyDoes = new MyDoes(newInfo[0], newInfo[1], newInfo[2], newInfo[3], newInfo[4], newInfo[5], newInfo[6], newInfo[7]);
+                data.remove(changePos);
+                data.add(newMyDoes.getInfo());
+                list.remove(changePos);
+                list.add(newMyDoes);
+
+            }
+        }
+
+        doesAdapter = new DoesAdapter(MainActivity.this, list);
+        ourdoes.setAdapter(doesAdapter);
+        doesAdapter.notifyDataSetChanged();
+        FileHelper.writeData(data, this);
     }
 }

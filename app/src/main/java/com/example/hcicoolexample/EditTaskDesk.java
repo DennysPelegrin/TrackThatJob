@@ -21,13 +21,14 @@ import com.google.firebase.database.ValueEventListener;
 public class EditTaskDesk extends AppCompatActivity {
     EditText itemType, position, company, location, date, status, tags, notes;
     Button btnSaveUpdate, btnDelete;
-    DatabaseReference reference;
+    int arrPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task_desk);
 
+        arrPos = getIntent().getIntExtra("Position", -5);
         itemType = (EditText) findViewById(R.id.itemTypeText);
         position = (EditText) findViewById((R.id.positionText));
         company = (EditText) findViewById((R.id.companyText));
@@ -50,26 +51,12 @@ public class EditTaskDesk extends AppCompatActivity {
         tags.setText(getIntent().getStringExtra("tags"));
         notes.setText(getIntent().getStringExtra("notes"));
 
-        final String keykeyDoes = getIntent().getStringExtra("keydoes");
-
-        reference = FirebaseDatabase.getInstance().getReference().child("HCICoolExample").child("Does" + keykeyDoes);
-
         btnDelete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v ){
-                reference.removeValue();
-                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>(){
-                   @Override
-                   public void onComplete(@NonNull Task<Void> task){
-                       if(task.isSuccessful()){
-                           Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
-                           startActivity(a);
-                       }
-                       else{
-                           Toast.makeText(getApplicationContext(), "Failure!", Toast.LENGTH_SHORT).show();
-                       }
-                   }
-                });
+                   Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
+                   a.putExtra("DeletePosition", arrPos);
+                   startActivity(a);
             }
         });
 
@@ -77,30 +64,12 @@ public class EditTaskDesk extends AppCompatActivity {
         //make an event for button
         btnSaveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                reference.addListenerForSingleValueEvent(new ValueEventListener(){
-                   @Override
-                   public void onDataChange(DataSnapshot dataSnapshot){
-                       reference.child("itemType").setValue(itemType.getText().toString());
-                       reference.child("position").setValue(position.getText().toString());
-                       reference.child("company").setValue(company.getText().toString());
-                       reference.child("location").setValue(location.getText().toString());
-                       reference.child("date").setValue(date.getText().toString());
-                       reference.child("status").setValue(status.getText().toString());
-                       reference.child("tags").setValue(tags.getText().toString());
-                       reference.child("notes").setValue(notes.getText().toString());
-                       reference.child("keydoes").setValue(keykeyDoes);
-
-                       //go from edit task into main activity
-                       Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
-                       startActivity(a);
-                   }
-
-                   @Override
-                   public void onCancelled(DatabaseError databaseError){
-
-                   }
-                });
+            public void onClick(View v) {
+                Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
+                a.putExtra("ChangePosition", arrPos);
+                String[] newInfo = {itemType.getText().toString(), position.getText().toString(), company.getText().toString(), location.getText().toString(), date.getText().toString(), status.getText().toString(), tags.getText().toString(), notes.getText().toString()};
+                a.putExtra("NewInfo", newInfo);
+                startActivity(a);
             }
         });
     }
