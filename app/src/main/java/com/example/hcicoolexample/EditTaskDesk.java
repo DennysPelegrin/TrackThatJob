@@ -58,28 +58,29 @@ public class EditTaskDesk extends AppCompatActivity {
             @Override
             public void onClick(View v ){
                 reference.removeValue();
-                //reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>(){
-                  // @Override
-                   //public void onComplete(@NonNull Task<Void> task){
-                       //if(task.isSuccessful()){
+                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>(){
+                   @Override
+                   public void onComplete(@NonNull Task<Void> task){
+                       if(task.isSuccessful()){
                            Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
                            startActivity(a);
-                       //}
-                       //else{
-                          // Toast.makeText(getApplicationContext(), "Failure!", Toast.LENGTH_SHORT).show();
-                       //}
-                  // }
-                //});
+                       }
+                       else{
+                           Toast.makeText(getApplicationContext(), "Failure!", Toast.LENGTH_SHORT).show();
+                       }
+                   }
+                });
             }
         });
+
 
         //make an event for button
         btnSaveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                //reference.addValueEventListener(new ValueEventListener(){
-                   //@Override
-                   //public void onDataChange(DataSnapshot dataSnapshot){
+                reference.addListenerForSingleValueEvent(new ValueEventListener(){
+                   @Override
+                   public void onDataChange(DataSnapshot dataSnapshot){
                        reference.child("itemType").setValue(itemType.getText().toString());
                        reference.child("position").setValue(position.getText().toString());
                        reference.child("company").setValue(company.getText().toString());
@@ -93,13 +94,13 @@ public class EditTaskDesk extends AppCompatActivity {
                        //go from edit task into main activity
                        Intent a = new Intent(EditTaskDesk.this, MainActivity.class);
                        startActivity(a);
-                   //}
+                   }
 
-                   //@Override
-                   //public void onCancelled(DatabaseError databaseError){
+                   @Override
+                   public void onCancelled(DatabaseError databaseError){
 
-                   //}
-                //});
+                   }
+                });
             }
         });
     }
