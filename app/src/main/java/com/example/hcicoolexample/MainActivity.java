@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ import android.content.Intent;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
-    TextView titlepage, subtitlepage, endpage;
+    TextView titlepage, searchFilter, endpage;
     RecyclerView ourdoes;
     Intent intent;
     ArrayList<MyDoes> list;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         titlepage = findViewById(R.id.titlepage);
-        subtitlepage = findViewById(R.id.subtitlepage);
+        searchFilter = findViewById(R.id.searchFilter);
         endpage = findViewById(R.id.endpage);
         btnAddNew = findViewById(R.id.btnAddNew);
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
 
         //customize font
         titlepage.setTypeface(MMedium);
-        subtitlepage.setTypeface(MLight);
+        searchFilter.setTypeface(MLight);
         endpage.setTypeface(MLight);
         btnAddNew.setTypeface(MLight);
 
@@ -104,5 +106,22 @@ public class MainActivity extends AppCompatActivity{
         ourdoes.setAdapter(doesAdapter);
         doesAdapter.notifyDataSetChanged();
         FileHelper.writeData(data, this);
+
+        searchFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                (MainActivity.this).doesAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }

@@ -8,12 +8,69 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import android.content.Context;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
-public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> {
+public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> implements Filterable{
     Context context;
     ArrayList<MyDoes> myDoes;
+
+    Filter myFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults filterResults = new FilterResults();
+            ArrayList<MyDoes> tempList=new ArrayList<MyDoes>();
+            //constraint is the result from text you want to filter against.
+            //objects is your data set you will filter from
+            if(constraint != null && myDoes!=null) {
+                int length=myDoes.size();
+                int i=0;
+                while(i<length){
+                    MyDoes item=myDoes.get(i);
+                    //do whatever you wanna do here
+                    //adding result set output array
+                    ArrayList<String> info = item.getInfo();
+                    boolean needsAdded = false;
+                    for(int k = 1; k < info.size(); k++) {
+                        if(info.get(k).contains(constraint)) {
+                            Log.i("INFO HERE: ", "SHOULD BE ADDED");
+                            needsAdded = true;
+                        }
+                    }
+
+                    if(needsAdded) {
+                        tempList.add(item);
+                    }
+
+                    i++;
+                }
+                //following two lines is very important
+                //as publish result can only take FilterResults objects
+                filterResults.values = tempList;
+                filterResults.count = tempList.size();
+            }
+            return filterResults;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence contraint, FilterResults results) {
+            myDoes = (ArrayList<MyDoes>) results.values;
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+            }
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return myFilter;
+    }
 
     public DoesAdapter(Context c, ArrayList<MyDoes> p){
         context = c;
