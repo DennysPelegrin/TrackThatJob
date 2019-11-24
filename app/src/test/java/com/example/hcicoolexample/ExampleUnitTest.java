@@ -1,4 +1,4 @@
-package com.example.trackthatjob;
+package com.example.hcicoolexample;
 
 import org.junit.Test;
 
