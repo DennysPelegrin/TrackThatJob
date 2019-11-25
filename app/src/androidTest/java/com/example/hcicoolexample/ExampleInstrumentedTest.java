@@ -1,4 +1,4 @@
-package com.example.main;
+package com.example.hcicoolexample;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.main", appContext.getPackageName());
+        assertEquals("com.example.hcicoolexample", appContext.getPackageName());
     }
 }
