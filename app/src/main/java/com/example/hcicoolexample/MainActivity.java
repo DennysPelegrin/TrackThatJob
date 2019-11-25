@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
     TextView titlepage, searchFilter, endpage;
+    Switch compactSwitch;
     RecyclerView ourdoes;
     Intent intent;
     ArrayList<MyDoes> list;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
         endpage = findViewById(R.id.endpage);
         btnAddNew = findViewById(R.id.btnAddNew);
         btnClearSearch = findViewById(R.id.btnClearSearch);
+        compactSwitch = findViewById(R.id.switch1);
 
         //import fonts
         Typeface MLight = Typeface.createFromAsset(getAssets(), "fonts/ML.ttf");
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity{
         endpage.setTypeface(MLight);
         btnAddNew.setTypeface(MLight);
         btnClearSearch.setTypeface(MLight);
+        compactSwitch.setTypeface(MLight);
 
         btnAddNew.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -111,10 +116,20 @@ public class MainActivity extends AppCompatActivity{
             }
         }
 
-        doesAdapter = new DoesAdapter(MainActivity.this, list);
+        doesAdapter = new DoesAdapter(MainActivity.this, list, compactSwitch.isChecked());
         ourdoes.setAdapter(doesAdapter);
         doesAdapter.notifyDataSetChanged();
         FileHelper.writeData(data, this);
+
+        compactSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // isChecked true if the switch is in the On position
+                doesAdapter = new DoesAdapter(MainActivity.this, list, isChecked);
+                ourdoes.setAdapter(doesAdapter);
+                doesAdapter.notifyDataSetChanged();
+                (MainActivity.this).doesAdapter.getFilter().filter(searchFilter.getText());
+            }
+        });
 
         searchFilter.addTextChangedListener(new TextWatcher() {
             @Override

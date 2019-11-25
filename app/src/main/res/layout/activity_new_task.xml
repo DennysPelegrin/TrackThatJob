@@ -191,7 +191,7 @@
                     android:background="@drawable/bginputtask"
                     android:paddingLeft="12dp"
                     android:textColorHint="#B5B5B5"
-                    android:hint="Ex: 11/25/2019"
+                    android:hint="Ex: 1/25/2019"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="55dp" />

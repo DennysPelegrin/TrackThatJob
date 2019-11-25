@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">#009933</item>
+    </style>
+
 </resources>

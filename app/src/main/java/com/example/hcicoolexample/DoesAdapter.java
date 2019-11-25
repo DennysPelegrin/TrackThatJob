@@ -15,10 +15,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> implements Filterable{
     Context context;
     ArrayList<MyDoes> myDoes;
     ArrayList<MyDoes> originalDoes;
+    boolean compactView;
 
     Filter myFilter = new Filter() {
         @Override
@@ -30,11 +33,12 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
             if(constraint != null && myDoes!=null && constraint.length() > 0) {
                 int length=originalDoes.size();
                 int i=0;
+                constraint = constraint.toString().toLowerCase();
                 while(i<length){
                     MyDoes item=originalDoes.get(i);
                     //do whatever you wanna do here
                     //adding result set output array
-                    if(item.getCompany().contains(constraint) || item.getTags().contains(constraint) || item.getLocation().contains(constraint) || item.getPosition().contains(constraint)) {
+                    if(item.getCompany().toLowerCase().contains(constraint) || item.getTags().toLowerCase().contains(constraint) || item.getLocation().toLowerCase().contains(constraint) || item.getPosition().toLowerCase().contains(constraint)) {
                         tempList.add(item);
                     }
 
@@ -66,16 +70,22 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
         return myFilter;
     }
 
-    public DoesAdapter(Context c, ArrayList<MyDoes> p){
+    public DoesAdapter(Context c, ArrayList<MyDoes> p, boolean compact){
         context = c;
         myDoes = p;
         originalDoes = myDoes;
+        compactView = compact;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_does , viewGroup, false));
+        if(compactView) {
+            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_does , viewGroup, false));
+        }
+        else {
+            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_doesexpanded , viewGroup, false));
+        }
     }
 
     @Override
@@ -83,6 +93,12 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
         myViewHolder.titledoes.setText(myDoes.get(i).getPosition());
         myViewHolder.descdoes.setText(myDoes.get(i).getCompany());
         myViewHolder.datedoes.setText(myDoes.get(i).getStatus());
+
+        if(!compactView) {
+            myViewHolder.tagsdoes.setText(myDoes.get(i).getTags());
+            myViewHolder.locationdoes.setText(myDoes.get(i).getLocation());
+            myViewHolder.dateRem.setText(myDoes.get(i).getDate());
+        }
 
         final String getItemType = myDoes.get(i).getItemType();
         final String getPosition = myDoes.get(i).getPosition();
@@ -121,6 +137,9 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
         TextView titledoes;
         TextView descdoes;
         TextView datedoes;
+        TextView dateRem;
+        TextView locationdoes;
+        TextView tagsdoes;
 
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
@@ -128,6 +147,9 @@ public class DoesAdapter extends RecyclerView.Adapter<DoesAdapter.MyViewHolder> 
             titledoes = (TextView) itemView.findViewById(R.id.titledoes);
             descdoes = (TextView) itemView.findViewById(R.id.descdoes);
             datedoes = (TextView) itemView.findViewById(R.id.datedoes);
+            dateRem = (TextView) itemView.findViewById(R.id.dateRem);
+            locationdoes = (TextView) itemView.findViewById(R.id.locationdoes);
+            tagsdoes = (TextView) itemView.findViewById(R.id.tagsDoes);
         }
     }
 }

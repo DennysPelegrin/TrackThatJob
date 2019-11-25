@@ -53,8 +53,8 @@
                 android:id="@+id/btnAddNew"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bgbtnnew"
                 android:text="+"
                 android:backgroundTint="#ff751a"
@@ -63,11 +63,23 @@
                 android:textColor="#000"
                 android:textSize="38sp" />
 
+            <Switch
+                android:theme="@style/CustomAppTheme"
+                android:id="@+id/switch1"
+                android:text="Compact "
+                android:textColor="#FFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="42dp"
+                android:layout_marginLeft="-40dp"
+                android:layout_marginTop="70dp"
+                android:checked="true"/>
+
             <Button
                 android:id="@+id/btnClearSearch"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="-225dp"
+                android:layout_marginLeft="-230dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/bgbtnnew"
                 android:backgroundTint="#595959"
