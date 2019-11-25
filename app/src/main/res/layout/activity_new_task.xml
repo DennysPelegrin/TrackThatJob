@@ -18,7 +18,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="#5396bd"
             android:layout_height="198dp">
 
             <TextView
@@ -185,16 +185,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <EditText
-                    android:id="@+id/dateText"
-                    android:inputType="text"
-                    android:background="@drawable/bginputtask"
-                    android:paddingLeft="12dp"
-                    android:textColorHint="#B5B5B5"
-                    android:hint="Ex: 1/25/2019"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp" />
+                <Button
+                    android:id="@+id/setDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="Set Date" />
 
             </LinearLayout>
 
@@ -298,7 +295,7 @@
             android:textColor="#FFF"
             android:textAllCaps="false"
             android:background="@drawable/bgbtncreate"
-            android:backgroundTint="#66ff99"
+            android:backgroundTint="#9ec771"
             android:textSize="22sp"
             android:layout_width="match_parent"
             android:layout_height="55dp"/>
@@ -313,6 +310,7 @@
             android:textColor="#FFF"
             android:textAllCaps="false"
             android:background="@drawable/bgbtncancel"
+            android:backgroundTint="#e67460"
             android:textSize="22sp"
             android:layout_width="match_parent"
             android:layout_height="55dp"/>

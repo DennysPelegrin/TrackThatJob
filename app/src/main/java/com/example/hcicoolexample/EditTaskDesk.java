@@ -1,25 +1,23 @@
 package com.example.hcicoolexample;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import java.text.DateFormat;
+import java.util.Calendar;
 
-public class EditTaskDesk extends AppCompatActivity {
-    EditText itemType, position, company, location, date, status, tags, notes;
+public class EditTaskDesk extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+    EditText itemType, position, company, location, status, tags, notes;
+    TextView date;
     Button btnSaveUpdate, btnDelete;
     int arrPos;
 
@@ -33,7 +31,7 @@ public class EditTaskDesk extends AppCompatActivity {
         position = (EditText) findViewById((R.id.positionText));
         company = (EditText) findViewById((R.id.companyText));
         location = (EditText) findViewById(R.id.locationText);
-        date = (EditText) findViewById((R.id.dateText));
+        date = (TextView) findViewById((R.id.date));
         status = (EditText) findViewById((R.id.statusText));
         tags = (EditText) findViewById(R.id.tagsText);
         notes = (EditText) findViewById((R.id.notesText));
@@ -50,6 +48,7 @@ public class EditTaskDesk extends AppCompatActivity {
         status.setText(getIntent().getStringExtra("status"));
         tags.setText(getIntent().getStringExtra("tags"));
         notes.setText(getIntent().getStringExtra("notes"));
+
 
         btnDelete.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -72,5 +71,28 @@ public class EditTaskDesk extends AppCompatActivity {
                 startActivity(a);
             }
         });
+
+        Button btnCalendar = (Button) findViewById(R.id.setDate);
+        btnCalendar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(cal.getTime());
+
+        TextView textView = (TextView) findViewById(R.id.date);
+        textView.setText(currentDateString);
     }
 }

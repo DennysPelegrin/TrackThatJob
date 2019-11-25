@@ -2,7 +2,9 @@ package com.example.hcicoolexample;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import android.widget.DatePicker;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,10 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
-public class NewTaskAct extends AppCompatActivity {
-    TextView titlepage, itemTypeTitle, positionTitle, companyTitle, locationTitle, dateTitle, statusTitle, tagsTitle, notesTitle;
-    EditText itemType, position, company, location, date, status, tags, notes;
+public class NewTaskAct extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    TextView titlepage, itemTypeTitle, positionTitle, companyTitle, locationTitle, dateTitle, statusTitle, tagsTitle, notesTitle, date;
+    EditText itemType, position, company, location, status, tags, notes;
     Button btnSaveTask, btnCancel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,7 +49,7 @@ public class NewTaskAct extends AppCompatActivity {
         locationTitle = findViewById(R.id.location);
         location = findViewById(R.id.locationText);
         dateTitle = findViewById(R.id.date);
-        date = findViewById(R.id.dateText);
+        date = findViewById(R.id.date);
         statusTitle = findViewById(R.id.status);
         status = findViewById(R.id.statusText);
         tagsTitle = findViewById(R.id.tags);
@@ -50,7 +58,14 @@ public class NewTaskAct extends AppCompatActivity {
         notes = findViewById(R.id.notesText);
 
 
-
+        Button btnCalendar = (Button) findViewById(R.id.setDate);
+        btnCalendar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
 
         btnSaveTask = findViewById(R.id.btnSaveTask);
         btnCancel = findViewById((R.id.btnCancel));
@@ -63,6 +78,8 @@ public class NewTaskAct extends AppCompatActivity {
             }
         });
 
+
+
         btnSaveTask.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -71,7 +88,7 @@ public class NewTaskAct extends AppCompatActivity {
                 String p = position.getText().toString();
                 String c = company.getText().toString();
                 String l = location.getText().toString();
-                String d = date.getText().toString();
+                String d = dateTitle.getText().toString();
                 String s = status.getText().toString();
                 String t = tags.getText().toString();
                 String n = notes.getText().toString();
@@ -108,6 +125,18 @@ public class NewTaskAct extends AppCompatActivity {
         notes.setTypeface(MMedium);
         btnSaveTask.setTypeface(MMedium);
         btnCancel.setTypeface(MLight);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(cal.getTime());
+
+        TextView textView = (TextView) findViewById(R.id.date);
+        textView.setText(currentDateString);
     }
 
 }
